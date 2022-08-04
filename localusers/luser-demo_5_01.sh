@@ -66,3 +66,6 @@ echo "Last command status code: ${?} / Expected: !0"
 
 head -n3  /etc/passwd &> /dev/null
 echo "Last command status code: ${?} / Expected: 0"
+
+# Cleanup:
+rm ${FILE} ${ERR_FILE} &> /dev/null
