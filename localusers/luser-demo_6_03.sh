@@ -50,6 +50,32 @@ do
 	esac
 done
 
+# print all arguments we've passed in
+echo "Number of arguments: ${#}"
+echo "All arguments: ${@}"
+echo "First argument: ${1}"
+echo "Second argument: ${2}"
+echo "Third argument: ${3}"
+
+# Inspect OPTIND
+# OPTIND stores the position of next command line arg following the options
+echo "OPTIND: ${OPTIND}"
+
+# Remove the options while leaving remaining arguments
+shift "$(( OPTIND - 1 ))"
+echo "After the shift: "
+echo "Number of arguments: ${#}"
+echo "All arguments: ${@}"
+echo "First argument: ${1}"
+echo "Second argument: ${2}"
+echo "Third argument: ${3}"	
+
+# in this case we consider extra arguments an error so:
+if [[ "${#}" -gt 0 ]]
+then
+	usage
+fi
+
 send_to_stdout 'Generating a password...'
 
 PASSWORD=$(date +%s%N${RANDOM} | sha256sum | head -c${LENGTH})
@@ -59,9 +85,11 @@ then
 	send_to_stdout "Setting password special character"
 	SPECIAL="!@#$%^&*()_+<>?"
 	S=$(echo "${SPECIAL}" | fold -w1 | shuf | head -c1)
-	LENGTH=$((LENGTH-1))
+	LENGTH=$(( LENGTH-- )) # decrement by 1
 	PASSWORD=$(echo ${PASSWORD} | head -c${LENGTH})${S}
 fi
 
 send_to_stdout "Password created successfully."
 send_to_stdout "Your password: ${PASSWORD}"
+
+exit 0
