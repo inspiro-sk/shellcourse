@@ -41,7 +41,7 @@ if [[ "${?}" -ne 0 ]]; then
 	exit 1
 fi
 
-echo "${PASSWORD}" | passwd --stdin ${USER_NAME} &> /dev/null
+echo "${PASSWORD}" | passwd -e --stdin ${USER_NAME} &> /dev/null
 
 # Displays the username, password, and host where the account was created.
 # This way the help desk staff can copy the output of the script in order to 

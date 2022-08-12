@@ -1,5 +1,6 @@
 #!/bin/bash
 
+<<<<<<< HEAD
 # Demonstrates the usage of command line arguments (parsing)
 # Includes case statements and functions
 
@@ -29,4 +30,14 @@ case "${1}" in
         echo "Supply a valid option!" >&2
         exit 1
         ;;
+=======
+# This script is a demonstration of case statements in shell script:
+case ${1} in
+	start) echo 'Starting' ;;
+	stop) echo 'Stopping' ;;
+	status|state) echo 'Status:' ;;
+	*)
+		echo "Please supply a valid option" >&2
+		exit 1
+>>>>>>> c441a92b9ca58b48f68cdf3b3dcd1fff47d3dd42
 esac
