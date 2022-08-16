@@ -15,12 +15,12 @@ fi
 grep 'Failed' ${INPUT_FILE} | cut -d ':' -f 4 | awk -F ' ' '{print $(NF-3)}' | sort | uniq -c | sort -nr >& /dev/null
 
 # determine list of unique IPs
-IP_LIST=$(grep 'Failed' ${INPUT_FILE} | cut -d ':' -f 4 | awk -F ' ' '{print $(NF-3)}' | sort | uniq)
-
-# lookup the country of origin
-for IP in ${IP_LIST}
+grep 'Failed' ${INPUT_FILE} | cut -d ':' -f 4 | awk -F ' ' '{print $(NF-3)}' | sort | uniq -c | sort -nr | while read COUNT IP
 do
-    echo "${IP} | $(geoiplookup ${IP})"
+    if [[ "${COUNT}" -gt "10" ]]
+    then
+        echo "${COUNT},${IP},$(geoiplookup ${IP})"
+    fi
 done
 
 exit 0
